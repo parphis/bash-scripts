@@ -67,6 +67,12 @@ echo ${arr[0]} # a 0. eleme a tömbnek
   document.getElementsByTagName("body")[0].appendChild(link).click();
 ```
 
+#### Szeretnék látni egy fájlt hexa formában, mint ahogy például az MC hexa nézete, csak mindezt Vim-ben.
+```
+:e <a fájl>
+:%!xxd
+```
+
 ### Git
 
 ### ImageMagick
@@ -87,3 +93,15 @@ exit;
 
 #### Vagrant-DSpace telepítésnél jött elő, hogy a Github-ról nem tudott letöltődni a DSpace repo.
 Hogy ez megoldódjon, a hoszt gépen kellett a Github felhasználómnak az SSH publikus kulcsát hozzáadni az `ssh-add` paranccsal az ssh ügynökhöz. Így már le tudta tölteni a Gitről a DSpace cuccokat.
+
+### Raspberry Pi
+
+#### Képfájlt szeretnék sima `dd` paranccsal másolni a kártyára
+(Installing OS images on Linux)[https://www.raspberrypi.org/documentation/installation/installing-images/linux.md]
+`lsblk` vagy hasonló paranccsal kell megnézni a diszk/sd kártya nevét, és azt kell beírni az `of=`-hoz.
+
+```
+unzip -p 2018-11-13-raspbian-stretch.zip | sudo dd of=/dev/sdX bs=4M conv=fsync status=progress
+```
+A `bs=4M` helyett lehet, hogy `1M` kellhet.
+
