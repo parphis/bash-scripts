@@ -32,7 +32,7 @@ Találtam egy csomagot, amit lehet telepíteni https://launchpadlibrarian.net/12
 de @jmarton által összeállított csomagban benne van minden.
 Függőségei: libncp_2.2.6-9, és libpam-ncp_2.2.6.-9
 Telepítés után így lehet mountolni (mindegyik meghajtó egy-egy mappaként fog megjelenni):
-`ncpmount -S ORCA -A 152.66.114.2 -U .ivig.foigazgatosag.omikk -u parphis ./bme-novell/`
+`ncpmount -S ORCA -A [IP] -U [novell-user] -u [local-user] [mount-point]`
 
 ### Szövegfeldolgozás
 #### Új sor karakter van a sztring végén, de nem kellene, hogy ott legyen.
