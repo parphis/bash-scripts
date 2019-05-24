@@ -2,6 +2,19 @@
 Hasznos bash szkriptek.
 
 ### Adminisztráció
+#### Adobe Reader telepítése Debian 9-re. (utils/AdbeRdr9.5.5-1_i386linux_enu.deb)
+```
+wget ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9.5.5-1_i386linux_enu.deb
+gdebi AdbeRdr9.5.5-1_i386linux_enu.deb
+```
+
+#### A Network Manager-el szeretnék hozzáadni egy openvpn konfig fájlt.
+apt-get install network-manager-openvpn-gnome openvpn-systemd-resolved
+nmcli connection import type openvpn file /home/parphis/viamap/coenodat/okologia_marta.gergely.ovpn 
+
+#### Adott egy fájl, benne fájlnevekkel. Ezek helyfoglalását, méretét kell kiszámolni egyesével.
+`for f in `cat files.log`; do s=`stat -c%s $f`; let "s=$s/1024"; echo $s done`
+
 #### Szeretném becsomagolni a mappa tartalmát, amiben benne állok ZIP-be.
 `zip -r ~/csomag.zip *`
 
