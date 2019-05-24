@@ -87,6 +87,13 @@ echo ${arr[0]} # a 0. eleme a tömbnek
 ```
 
 ### Git
+#### LFS telepítése, beállítása
+```
+git lfs install # minden repo-ra külön kell meghívni
+git lfs track "*.EXT" # többféle minta is illeszthető ide, de lehet szerkeszteni a .gitignore fájlt is kézzel
+git add .gitattributes
+```
+Ha már a history-ban lévő állományokra is érvényesíteni kell, hogy LFS-ben legyenek tárolva, akkor vagy szerkeszteni kell azokat, vagy `rebase` paranccsal újraírni a history-t.
 
 ### ImageMagick
 #### Kellene n darab kép adott mérettel, amik mond másként néznek ki.
