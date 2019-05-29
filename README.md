@@ -9,8 +9,10 @@ gdebi AdbeRdr9.5.5-1_i386linux_enu.deb
 ```
 
 #### A Network Manager-el szeretnék hozzáadni egy openvpn konfig fájlt.
+```
 apt-get install network-manager-openvpn-gnome openvpn-systemd-resolved
-nmcli connection import type openvpn file /home/parphis/viamap/coenodat/okologia_marta.gergely.ovpn 
+nmcli connection import type openvpn file *.ovpn
+```
 
 #### Adott egy fájl, benne fájlnevekkel. Ezek helyfoglalását, méretét kell kiszámolni egyesével.
 `for f in `cat files.log`; do s=`stat -c%s $f`; let "s=$s/1024"; echo $s done`
