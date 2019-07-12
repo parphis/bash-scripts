@@ -2,6 +2,19 @@
 Hasznos bash szkriptek.
 
 ### Adminisztráció
+#### Apache2 szerver van, és kódból (PHP) szeretnék a rendszer /tmp mappába írni, de Debian 9 alatt alapból nem engedett a sima /tmp-be írás biztonsági okokból. Ezt a követezőképpen lehet felülírni.
+```
+# hogy lássuk, hol van engedélyezve:
+grep -R PrivateTmp /etc/systemd/
+# állítsuk meg a szervert
+systemctl stop apache2
+# módosítsuk az apache2 service konfigot
+/etc/systemd/system/multi-user.target.wants/apache2.service
+  _PrivateTmp=false_
+systemctl daemon-reload
+systemctl start apache2
+```
+
 #### Adobe Reader telepítése Debian 9-re. (utils/AdbeRdr9.5.5-1_i386linux_enu.deb)
 ```
 wget ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9.5.5-1_i386linux_enu.deb
@@ -59,12 +72,24 @@ echo ${arr[0]} # a 0. eleme a tömbnek
 #### Keresek egy szövegrészt egy adott fájlban, és szeretném azt is tudni, melyik sorban van.
 `grep -Rn "https://" --include "*.php" . | while read x; do echo $x; done`
 `find . -type f -name "*.php" -exec grep -rne 'https' {} \;`
+`find . -type f -print0 | xargs -0 grep "some string"`
 
 #### Keresek egy szövegrészt egy adott fájlban, és szeretném tudni, melyik sorban van, de csak egy részét szeretném látni.
 `grep -Rn "https://" --include "*.php" ./subfolder | while read x; do echo ${x:0:230}; done`
 
 
 ### Programozás
+#### Van egy fomrázatlan JSON, amit a VIM-ben ezzela négy sorral viszonylag gyorsan olvashatóra lehet alakjtani.
+```
+%s/},/},\r/g
+
+%s/\",\"/\",\r\t\t\t\"/g
+
+%s/[0-9],/&\r\t\t\t/g
+
+%s/{\"/{\r\t\t\t\"/g
+```
+
 #### Szeretnék összehasonlítani két fájlt.
 `vimdiff 20190222190840_341733007_final_array.txt 20190222204937_17047325_final_array.txt`
 
