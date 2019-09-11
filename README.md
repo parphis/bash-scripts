@@ -1,7 +1,12 @@
-# bash-scripts
-Hasznos bash szkriptek.
+# Kezdd itt, mielőtt a neten keresnél...
 
 ### Adminisztráció
+#### Egy felhasználó milyen csoportnak vagy csoportoknak a tagja?
+`less /etc/group | grep -e "USERNAME"`
+
+#### Adjuk hozzá az adott felhasználót egy csoporthoz, például a sudo csoporthoz ott, ahol a sudo parancs elérhető, és szeretnénk, ha a felhasználó tudna admin jogokkal bírni
+`usermod -a -G sudo USERNAME`
+
 #### Apache2 szerver van, és kódból (PHP) szeretnék a rendszer /tmp mappába írni, de Debian 9 alatt alapból nem engedett a sima /tmp-be írás biztonsági okokból. Ezt a követezőképpen lehet felülírni.
 ```
 # hogy lássuk, hol van engedélyezve:
