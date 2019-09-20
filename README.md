@@ -1,6 +1,33 @@
-# Kezdd itt, mielőtt a neten keresnél...
+### Kezdd itt, mielőtt a neten keresnél...
 
 ### Adminisztráció
+
+#### Keresni kell egy fájlt dátum szerint
+Fájlok, módosítva adott nap on vagy utána
+`find . -type f -newermt 2019-09-19`
+Fájlok hozzáférési dátum szerint
+`find . -type f -newerat 2019-09-19`
+Fájlok jogosultsás módosítási ideje szerint (ha nem lett jog módosítva rajtuk, akkor az tekinthető a létrehozás dátumának)
+`find . -type f -newerct 2019-09-19`
+
+#### Le kell ellenőrizni, hogy nyitva van-e egy adott port a rendszeren
+`netstat -aon | grep "PORT_NBR"`
+`netstat -ntlp`
+
+#### Ki kell nyitni egy portot Debian alatt Apache2-ben
+Az /etc/apache2/ports.conf fájlban:
+```
+NameVirtualHost *:8080
+```
+Az /etc/apache2/sites-available/default-ssl.conf fájlban:
+```
+<VirtualHost *:8080></VirtualHost>
+```
+
+#### OpenVPN nem tud kapcsolódni
+1. Hibakereséshez a legjobb az OpenVPN szerver logja, de a kliens is megteszi. Pl. `tail -f /var/log/syslog` vagy `journalctl -b -u NetworkManager`.
+2. Hiba: __SIGUSR1[soft,private-key-password-failure] received, process restarting__. Megoldás: -látszólagos- az `/etc/NetworkManager/system-connections/` helyen megkerestem az adott kapcsolathoz tartozó konfig fájlt, majd abban a `cert-pass-flags` értékét először nullára, és vissza 1-re írtam át. Minden egyes módosítás után újraindítottam a szervizt: `systemctl restart network-manager`. A második módosítás után ismét bekérte a VPN jelszavamat a kapcsolódás előtt (merthogy a jelszó elvileg a kulcstartóban van/volt), és utána kapcsolódott rendesen. Semmit nem módosítottam, nem telepítettem a hiba előtt. A `key-size` és a `cipher` beállítások beleírása nem segített a hibán, de a warningokat eltűntette.
+
 #### Egy felhasználó milyen csoportnak vagy csoportoknak a tagja?
 `less /etc/group | grep -e "USERNAME"`
 
@@ -39,7 +66,9 @@ nmcli connection import type openvpn file *.ovpn
 `zip -r ~/csomag.zip *`
 
 #### Nincsen zip telepítve, de be kell csomagolnon egy komplett mappát.
-`tar cfzv csomag.tar.gz ./ezt-az-egeszet/`
+`apt-get install xz-utils`, ha kell.
+`xz [becsomagolni]`
+`unxz [kicsomagolni]`
 
 #### Szeretnék felmásolni SSH-n keresztül egy fájlt a távoli gépre. A -r recurzíven másol, a -P megmondja a portot, ha nem az alap 22-es az.
 `scp -r -P 52347 valami.zip  USER@HOST:FULLPATH`
@@ -140,6 +169,15 @@ convert background.ppm -fill white -draw "scale 4,4 gravity center text 0,0 '$i'
 done
 exit;
 ```
+
+#### El kell vágni egy képet két részre vízszintesen úgy, hogy a két részletet mentsük el külön fájlba.
+`convert [IMAGE_TO_BE_SPLIT] -crop 50%x100% out%d_image.XXX`
+
+#### Információk képekről a konzolon
+`identify [IMAGE_NAME]`
+
+#### Kép megnyitása IM megjelenítőben konzolról
+`display [IMAGE_NAME]`
 
 ### Vagrant
 
