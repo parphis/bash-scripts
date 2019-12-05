@@ -2,6 +2,15 @@
 
 ### Adminisztráció
 
+#### Több fájlt kelll egyszerre összehasonlítani
+Erre jó grafikus felület a `Meld` program, de még jobb a konzolról is indítható `diffuse`
+`apt-get install diffuse`
+És utána `diffuse <egyik> <másik> <n.dik>
+
+#### PIN kód megadása Modem Manager számára
+A GUI felületen nem jelenik meg mindig a PIN bekérő felület, de parancssorban is meg lehet adni:
+`mmcli -i 0 --pin=CODE`
+
 #### Keresni kell egy fájlt dátum szerint
 Fájlok, módosítva adott nap on vagy utána
 `find . -type f -newermt 2019-09-19`
@@ -195,3 +204,18 @@ unzip -p 2018-11-13-raspbian-stretch.zip | sudo dd of=/dev/sdX bs=4M conv=fsync 
 ```
 A `bs=4M` helyett lehet, hogy `1M` kellhet.
 
+### Adatbázis
+
+#### Adott egy xz-ben tömörített postgresql dump, amit be kell importálni
+```
+unxz valami.xz
+createdb [adatbazis_neve] -U [postgres_user_with_create_privilege]
+psql [adatbazis_neve] -U [postgres_user] -h [localhost_peldaul] < valami.sql
+```
+
+#### Oracle adatbázis verzió lekérdezése SQLDeveloperből
+```
+begin
+  dbms_output.put_line(dbms_db_version.version || '.' || dbms_db_version.release);
+end;
+```
