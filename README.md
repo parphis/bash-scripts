@@ -2,6 +2,13 @@
 
 ### Adminisztráció
 
+#### Alapértelmezett Java módosítása linkek segítségével.
+Valami hasonló helyről le kell tölteni a Java csomagot, és kicsomagolni:
+https://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html
+`tar -xzvf jdkXXX.tar.gz`
+És ha már volt Java telepítve, akkor az `/etc/alternatives` mappában kell legyenek linkek, ezeket kell megváltoztatni:
+`for i in \`ls -al | grep jdk1.8.0 | awk '{ print $9 }'\`;do ln -sf kicsomagolt-jdk/bin/$i $i;done`
+
 #### Több fájlt kelll egyszerre összehasonlítani
 Erre jó grafikus felület a `Meld` program, de még jobb a konzolról is indítható `diffuse`
 `apt-get install diffuse`
@@ -78,6 +85,21 @@ nmcli connection import type openvpn file *.ovpn
 `apt-get install xz-utils`, ha kell.
 `xz [becsomagolni]`
 `unxz [kicsomagolni]`
+
+#### Csomagolás TAR-ral.
+```
+tar -czvf MyArchive Source_file 
+vagy
+tar --create --gzip --verbose --file=MyArchive.gz Source_file
+```
+
+#### Kicsomagolás TAR-ral.
+```
+tar -xzvf MyArchive Destination_file 
+vagy
+tar --extract --gunzip --verbose --file=MyArchive.gz Destination_file
+```
+
 
 #### Szeretnék felmásolni SSH-n keresztül egy fájlt a távoli gépre. A -r recurzíven másol, a -P megmondja a portot, ha nem az alap 22-es az.
 `scp -r -P 52347 valami.zip  USER@HOST:FULLPATH`
@@ -156,6 +178,9 @@ echo ${arr[0]} # a 0. eleme a tömbnek
 :%!xxd
 ```
 
+#### Fájl megnyitása, szerkesztése távoli gépről vim-mel
+`vim scp://user@myserver[:port]//path/to/file.txt`
+
 ### Git
 #### LFS telepítése, beállítása
 ```
@@ -218,4 +243,12 @@ psql [adatbazis_neve] -U [postgres_user] -h [localhost_peldaul] < valami.sql
 begin
   dbms_output.put_line(dbms_db_version.version || '.' || dbms_db_version.release);
 end;
+```
+
+### Multimédia
+
+#### DVD rippelés ffmpeg-gel
+```
+cat VALAMI_01.VOB VALAMI_02.VOB VALAMIN_NN.VOB > VOB01.VOB
+ffmpeg -i VOB01.VOB -map 0:1 -map 0:2 -map 0:3 -codec:v libx264 -crf 21 -codec:a libmp3lame -qscale:a 2 -threads 2 /path/to/eg/test.mkv
 ```
