@@ -2,6 +2,17 @@
 
 ### Adminisztráció
 
+#### Törölnöm kell fájlokat, amelyek egy adott mintát követnek
+Ez a leginkább kompatibilis, de minden találaton meghívódik törlés parancs
+`sudo find / -name TO-FIND -exec rm {} +`
+Ez is jó lehet a legtöbb rendszeren, és itt nincsen rm overhead
+`find / -name TO-FIND -print0 | xargs -0 rm`
+Ez csak ott működik, ahol a find a -delete-tel lett fordítva, és veszélyes is, mert a kapcsolót a match után írva minden fájlt töröl!
+`sudo find / -name TO-FIND -delete`
+
+#### Keresem a sehová nem mutató linkeket
+`find . -type l ! -exec test -e {} \; -print | less`
+
 #### Alapértelmezett Java módosítása linkek segítségével.
 Valami hasonló helyről le kell tölteni a Java csomagot, és kicsomagolni:
 https://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html
