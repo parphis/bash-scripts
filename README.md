@@ -2,6 +2,24 @@
 
 ### Adminisztráció
 
+#### Nem szeretném, ha a CTRL+S kód a terminált megállítaná.
+Adjuk hozzá a `.bashrc` fájlhoz a parancsot:
+`stty -inox`
+majd
+`. .bashrc`
+
+#### VNC szervert indítok egy gépen reboot után, de a viewer-ből indított terminál nem a bash terminál
+A futtatás előtt kell egy 
+`export SHELL=/bin/bash`
+hívás.
+
+#### Mi a futó Tomcat szerver verziója?
+Meg kell keresni a Tomcat lib mappáját, és odamenni, majd
+`java -cp catalina.jar org.apache.catalina.util.ServerInfo`
+
+#### Mi foglalja a legtöbb helyet?
+`du -sh * | sort -rh | head -n 10`
+
 #### Törölnöm kell fájlokat, amelyek egy adott mintát követnek
 Ez a leginkább kompatibilis, de minden találaton meghívódik törlés parancs
 `sudo find / -name TO-FIND -exec rm {} +`
@@ -192,7 +210,22 @@ echo ${arr[0]} # a 0. eleme a tömbnek
 #### Fájl megnyitása, szerkesztése távoli gépről vim-mel
 `vim scp://user@myserver[:port]//path/to/file.txt`
 
+#### ROT13 Cézár kódolás bash-ben
+Kódolás:
+`echo "Ez egy teszt szöveg" | tr '[A-Za-z]' '[N-ZA-Mn-za-m]'`
+
+Dekódolás:
+`echo "Rm rtl grfmg fmöirt" | tr '[N-ZA-Mn-za-m]' '[A-Za-z]'`
+
 ### Git
+
+#### Master -> main branch csere
+```
+git branch -m master main
+git push -u origin main
+```
+És ezután a Github repoban a Settings -> Branches lapon is kell a default branchet módosítani, legvégül pedig lehet törölni a master-t.
+
 #### LFS telepítése, beállítása
 ```
 git lfs install # minden repo-ra külön kell meghívni
