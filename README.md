@@ -275,6 +275,12 @@ A `bs=4M` helyett lehet, hogy `1M` kellhet.
 
 ### Adatbázis
 
+#### Exportálni kell egy mysql adatbázis táblából, de nincsen jogunk a szerveren futtatni a dump-ot.
+```
+mysql -B -u <user> -p <database> -h <host> -e "select * from <table> [limit 10];" | sed "s/\"/\"\"/g;s/'/\'/;s/\t/\",\"/g;s/^/\"/;s/$/\"/;s/\n//g"
+```
+A kimenet egy csv formátumú fájl lesz. Forrás: https://stackoverflow.com/questions/12040816/dump-all-tables-in-csv-format-using-mysqldump
+
 #### Adott egy xz-ben tömörített postgresql dump, amit be kell importálni
 ```
 unxz valami.xz
