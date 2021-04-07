@@ -2,6 +2,13 @@
 
 ### Adminisztráció
 
+#### Le kell tiltani egy user összes hálózati hozzáférését, de nem akarok semmi csicsát.
+Szabály hozzáadása:
+`/sbin/iptables -A OUTPUT -p all -m owner --uid-owner <USERNAME> -j DROP`
+Szabály törlése:
+`/sbin/iptables -D OUTPUT -p all -m owner --uid-owner <USERNAME> -j DROP`
+
+
 #### Nem szeretném, ha a CTRL+S kód a terminált megállítaná.
 Adjuk hozzá a `.bashrc` fájlhoz a parancsot:
 `stty -inox`
@@ -173,7 +180,13 @@ echo ${arr[0]} # a 0. eleme a tömbnek
 
 
 ### Programozás
-#### Van egy fomrázatlan JSON, amit a VIM-ben ezzela négy sorral viszonylag gyorsan olvashatóra lehet alakjtani.
+#### Van egy CSV fájlom két oszloppal, pontosvesszővel elválasztva benne az adatok, és szeretném az oszlopokat felcserélni, majd rendezni az egészet abc sorba, hogy lehessen látni a duplikátumokat
+```
+:%s/^\([^;]\+;\)\([^;\r]\+\)/\2;\1/c
+:sort
+```
+
+#### Van egy fomrázatlan JSON, amit a VIM-ben ezzel a négy sorral viszonylag gyorsan olvashatóra lehet alakjtani.
 ```
 %s/},/},\r/g
 
@@ -301,4 +314,9 @@ end;
 ```
 cat VALAMI_01.VOB VALAMI_02.VOB VALAMIN_NN.VOB > VOB01.VOB
 ffmpeg -i VOB01.VOB -map 0:1 -map 0:2 -map 0:3 -codec:v libx264 -crf 21 -codec:a libmp3lame -qscale:a 2 -threads 2 /path/to/eg/test.mkv
+```
+
+#### MOV-ból kell tömörített viedót létrehozni, de úgy, hogy a kép tömörítése a lehető legnagyobb legyen, és a hangminőség maradjon a lehető legjobb. A -b:v értékét lehet módosítani, minél kisebb, annál gyengébb lesz a kép. A példában lévő beállítással egy kb. 200MB-os, 2:21-es videóból lett 11MB, és a kép is elég elfogadható, élvezhető maradt. W10 alatt is le lehetett játszani egyéb telepítések nélkül.
+```
+ffmpeg -y -i IMG_0272.MOV -c:v libx264 -preset medium -b:v 500k -pass 1 -c:a aac -b:a 128k -f mp4 vig-bendeguz-oreg-oznek-nenikeje.mp4
 ```
