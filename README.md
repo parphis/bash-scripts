@@ -2,6 +2,11 @@
 
 ### Adminisztráció
 
+#### Teljes mentést kell csinálni a rendszerről
+```
+tar czf /<BACKUP-NAME.tar.gz> --exclude=/<BACKUP-NAME>.tar.gz --exclude=/dev --exclude=/mnt --exclude=/proc --exclude=/sys --exclude=/tmp --exclude=/lost+found --exclude=/media --exclude=/opt --exclude=/run --exclude=/srv /
+```
+
 #### Le kell tiltani egy user összes hálózati hozzáférését, de nem akarok semmi csicsát.
 Szabály hozzáadása:
 `/sbin/iptables -A OUTPUT -p all -m owner --uid-owner <USERNAME> -j DROP`
