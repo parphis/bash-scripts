@@ -2,6 +2,25 @@
 
 ### Adminisztráció
 
+#### Létre kell hozni egy SSL certifikációt
+A folyamat végén tudni kell a cégnevet, székhelyet, és organizational nevet.
+```bash
+openssl req -new -newkey rsa:2048 -nodes -keyout mail.mkab.key -out mail.mkab.csr
+```
+
+#### Belépés SSH-n úgy, hogy visszük magunkkal a git kulcsokat is
+```
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa
+```
+
+#### Nyomtató átnevezése
+`systemctl stop cups`
+`vim /etc/cups/printers.conf`
+Itt módosítsuk a nyomtató nevét, ami az első sorban í kacsacsőrök között kell, legyen.
+`mv /etc/cups/ppd/old-printer-name.ppd /etc/cups/ppd/new-printer-name.ppd`
+`systemctl start cups`
+
 #### Le kell tiltani egy user összes hálózati hozzáférését, de nem akarok semmi csicsát.
 Szabály hozzáadása:
 `/sbin/iptables -A OUTPUT -p all -m owner --uid-owner <USERNAME> -j DROP`
@@ -195,6 +214,11 @@ echo ${arr[0]} # a 0. eleme a tömbnek
 %s/[0-9],/&\r\t\t\t/g
 
 %s/{\"/{\r\t\t\t\"/g
+```
+
+Ez is működhet:
+```
+:%!python -m json.tool
 ```
 
 #### Szeretnék összehasonlítani két fájlt.
