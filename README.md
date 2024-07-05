@@ -204,6 +204,16 @@ echo ${arr[0]} # a 0. eleme a tömbnek
 
 
 ### Programozás
+
+#### Van egy fájl, tele fájlnevekel elérési útjaikkal együtt és ezekből kellene létrehozni a valóságban is a mappastruktúrát a megfelelő fájlnevekkel, de a fájlok lehetnek üresek, csak létezzenek.
+```
+for f in `cat filenames.lst`;do install -D /dev/null  $f;done
+```
+
+#### Van egy szövegfájl, és minden sor elejére be kell szúrni egy sorszámot
+Vimmel a legegyszerűbb:
+`:%s/^/\=printf('%-4d ', line('.'))`
+
 #### Van egy CSV fájlom két oszloppal, pontosvesszővel elválasztva benne az adatok, és szeretném az oszlopokat felcserélni, majd rendezni az egészet abc sorba, hogy lehessen látni a duplikátumokat
 ```
 :%s/^\([^;]\+;\)\([^;\r]\+\)/\2;\1/c
@@ -224,6 +234,13 @@ echo ${arr[0]} # a 0. eleme a tömbnek
 Ez is működhet:
 ```
 :%!python -m json.tool
+```
+
+#### Meg kell keresni részeket egy szövegben, és minden megtalált részt ki kell másolni a vágólapra VIM-ben
+```bash
+qaq
+:g/^match-something.*\{0,}/y A
+:let @+ = @a
 ```
 
 #### Szeretnék összehasonlítani két fájlt.
@@ -260,6 +277,12 @@ Dekódolás:
 `echo "Rm rtl grfmg fmöirt" | tr '[N-ZA-Mn-za-m]' '[A-Za-z]'`
 
 ### Git
+
+#### Egy fájl törlése a historyból
+`git filter-branch --force --index-filter \
+  "git rm --cached --ignore-unmatch application/config/email.php" \
+  --prune-empty --tag-name-filter cat -- --all
+`
 
 #### Master -> main branch csere
 ```
