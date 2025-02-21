@@ -2,6 +2,11 @@
 
 ### Adminisztráció
 
+#### Adott egy mappa, benne old kiterjesztésű fájlokkal, aminek a nevében van _ és - jelek, és úgy kell átmozgatni/nevezni őket, hogy a - mentén szétvágva egy tömbbe, a tömb első eleme legyen az új fájlnév
+```bash
+for i in `ls -1 *.old`;do readarray -d "-" -t arr <<< $i; mv $i ${arr[0]};done
+```
+
 #### Létre kell hozni egy SSL certifikációt
 A folyamat végén tudni kell a cégnevet, székhelyet, és organizational nevet.
 ```bash
